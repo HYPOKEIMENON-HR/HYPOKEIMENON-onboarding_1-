@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HYPO WEBTOON · 홈</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+/* ===== HYPOKEIMENON 사내 웹툰 - 공통 스타일 ===== */
+:root{
+  --blue:#3182F6;
+  --blue-dark:#1B64DA;
+  --blue-soft:#E8F2FF;
+  --bg:#F2F4F6;
+  --card:#FFFFFF;
+  --line:#EAECEF;
+  --text:#191F28;
+  --text-sub:#4E5968;
+  --text-mute:#8B95A1;
+  --header-bg:#E9EEF4;
+  --shadow:0 1px 3px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.05);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:'Pretendard','Pretendard Variable',-apple-system,sans-serif;
+  background:var(--bg);color:var(--text);
+  -webkit-font-smoothing:antialiased;
+}
+a{text-decoration:none;color:inherit;}
+
+/* ===== TOP BAR (공통) ===== */
+.topbar{
+  height:60px;background:#fff;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;padding:0 28px;position:sticky;top:0;z-index:50;
+}
+.logo{font-weight:800;font-size:17px;color:var(--blue);letter-spacing:-.5px;}
+.logo span{color:var(--text);}
+.logo small{display:block;font-size:11px;color:var(--text-mute);font-weight:600;letter-spacing:0;margin-top:1px;}
+.nav{display:flex;gap:4px;margin-left:26px;}
+.nav a{font-size:15px;font-weight:600;color:var(--text-sub);padding:8px 14px;border-radius:9px;transition:.15s;}
+.nav a:hover{background:var(--bg);color:var(--text);}
+.nav a.active{color:var(--blue);background:var(--blue-soft);}
+.top-right{margin-left:auto;display:flex;align-items:center;gap:16px;color:var(--text-mute);}
+.top-right svg{width:20px;height:20px;cursor:pointer;}
+.btn-up{background:var(--blue);color:#fff!important;padding:9px 16px!important;border-radius:10px;font-weight:700;}
+.btn-up:hover{background:var(--blue-dark)!important;}
+
+/* ===== HERO GRID (홈) ===== */
+.hero{background:var(--header-bg);padding:36px 0 42px;}
+.hero-head{max-width:1180px;margin:0 auto 26px;padding:0 28px;}
+.hero-head h1{font-size:24px;font-weight:800;letter-spacing:-.6px;}
+.hero-head p{font-size:14.5px;color:var(--text-sub);margin-top:6px;}
+.grid{
+  max-width:1180px;margin:0 auto;padding:0 28px;
+  display:grid;grid-template-columns:repeat(8,1fr);gap:20px 8px;justify-items:center;
+}
+.app{display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;width:100%;}
+.app .bubble{
+  width:60px;height:60px;border-radius:50%;background:#fff;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(49,130,246,.10);transition:transform .18s,box-shadow .18s;
+}
+.app .bubble svg{width:27px;height:27px;color:var(--blue);}
+.app:hover .bubble{transform:translateY(-4px);box-shadow:0 10px 22px rgba(49,130,246,.22);}
+.app .label{font-size:13px;color:var(--text-sub);font-weight:600;letter-spacing:-.3px;text-align:center;}
+
+/* ===== LAYOUT ===== */
+.wrap{max-width:1180px;margin:0 auto;padding:34px 28px 70px;}
+.wrap.two{display:grid;grid-template-columns:1fr 300px;gap:28px;align-items:start;}
+.section-title{font-size:19px;font-weight:800;letter-spacing:-.4px;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.section-title .more{margin-left:auto;font-size:13.5px;color:var(--text-mute);font-weight:600;}
+
+/* ===== WEBTOON CARDS ===== */
+.toon-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.toon{background:var(--card);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);transition:transform .18s,box-shadow .18s;cursor:pointer;display:block;}
+.toon:hover{transform:translateY(-5px);box-shadow:0 12px 30px rgba(0,0,0,.10);}
+.toon .cover{aspect-ratio:3/4;position:relative;display:flex;align-items:flex-end;padding:16px;color:#fff;}
+.toon .cover .ct{font-size:16px;font-weight:800;line-height:1.35;letter-spacing:-.4px;text-shadow:0 1px 8px rgba(0,0,0,.25);z-index:2;}
+.toon .cover .cat-tag{position:absolute;top:12px;left:12px;font-size:11.5px;font-weight:700;background:rgba(255,255,255,.92);color:var(--blue-dark);padding:4px 9px;border-radius:7px;z-index:2;}
+.toon .cover .new{position:absolute;top:12px;right:12px;font-size:11px;font-weight:800;background:#F04452;color:#fff;padding:3px 7px;border-radius:6px;z-index:2;}
+.toon .cover::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 35%,rgba(0,0,0,.45));z-index:1;}
+.toon .info{padding:13px 15px 15px;}
+.toon .info .meta{font-size:12.5px;color:var(--text-mute);display:flex;justify-content:space-between;}
+.toon .info .meta b{color:var(--text-sub);font-weight:600;}
+
+/* ===== LIST FILTER ===== */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.filters a{font-size:14px;font-weight:600;color:var(--text-sub);background:#fff;border:1px solid var(--line);padding:9px 16px;border-radius:30px;transition:.15s;}
+.filters a:hover{border-color:var(--blue);color:var(--blue);}
+.filters a.active{background:var(--blue);color:#fff;border-color:var(--blue);}
+
+/* ===== SIDEBAR CARDS ===== */
+.side{display:flex;flex-direction:column;gap:20px;}
+.card{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:22px;}
+.card .col-title{font-size:15px;font-weight:700;margin-bottom:14px;letter-spacing:-.3px;}
+/* work clock */
+.work-card .col-title{color:var(--text-mute);font-weight:600;font-size:13px;}
+.work-time{font-size:40px;font-weight:800;letter-spacing:-1.5px;line-height:1;font-variant-numeric:tabular-nums;}
+.work-date{font-size:13.5px;color:var(--text-mute);margin-top:8px;}
+.work-status{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;padding:5px 11px;border-radius:20px;margin-top:14px;background:var(--blue-soft);color:var(--blue);}
+.work-status .ds{width:7px;height:7px;border-radius:50%;background:var(--blue);}
+.work-status.off{background:#F2F4F6;color:var(--text-mute);}
+.work-status.off .ds{background:var(--text-mute);}
+.work-hours{margin-top:14px;display:flex;justify-content:space-between;font-size:13.5px;color:var(--text-sub);border-top:1px solid var(--line);padding-top:14px;}
+.work-hours b{color:var(--text);}
+/* rank list */
+.rank{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);}
+.rank:last-child{border-bottom:none;}
+.rank .n{font-size:15px;font-weight:800;color:var(--blue);width:18px;}
+.rank .rt{font-size:13.5px;font-weight:600;line-height:1.4;}
+.rank .rv{margin-left:auto;font-size:12px;color:var(--text-mute);}
+/* quick links */
+.qlink{display:flex;align-items:center;gap:10px;padding:11px 0;font-size:14px;font-weight:600;color:var(--text-sub);border-bottom:1px solid var(--line);}
+.qlink:last-child{border-bottom:none;}
+.qlink:hover{color:var(--blue);}
+.qlink svg{width:18px;height:18px;color:var(--blue);}
+
+/* ===== VIEWER ===== */
+.viewer-bar{background:#fff;border-bottom:1px solid var(--line);padding:18px 28px;position:sticky;top:60px;z-index:40;}
+.viewer-bar .vt{font-size:18px;font-weight:800;letter-spacing:-.4px;}
+.viewer-bar .vm{font-size:13px;color:var(--text-mute);margin-top:4px;}
+.strip{max-width:680px;margin:0 auto;padding:30px 16px 80px;display:flex;flex-direction:column;}
+.panel{width:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;position:relative;}
+.panel img{width:100%;display:block;}
+.panel-ph{aspect-ratio:4/5;font-size:15px;letter-spacing:.5px;}
+.panel-ph .pn{position:absolute;top:14px;left:16px;font-size:13px;opacity:.7;}
+.viewer-end{text-align:center;padding:30px 0;}
+.viewer-end p{font-size:15px;color:var(--text-sub);margin-bottom:16px;}
+
+/* ===== UPLOAD FORM ===== */
+.form-card{max-width:680px;margin:0 auto;}
+.form-card h1{font-size:22px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px;}
+.form-card .sub{font-size:14px;color:var(--text-sub);margin-bottom:26px;}
+.field{margin-bottom:20px;}
+.field label{display:block;font-size:14px;font-weight:700;margin-bottom:8px;}
+.field label span{color:var(--blue);}
+.field input,.field textarea,.field select{
+  width:100%;border:1px solid var(--line);border-radius:12px;padding:14px 16px;
+  font-family:inherit;font-size:15px;color:var(--text);background:#fff;transition:.15s;
+}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-soft);}
+.field textarea{min-height:100px;resize:vertical;}
+.drop{
+  border:2px dashed #C9D2DC;border-radius:14px;padding:38px 20px;text-align:center;
+  color:var(--text-mute);cursor:pointer;transition:.15s;background:#FBFCFD;
+}
+.drop:hover{border-color:var(--blue);background:#FAFCFF;color:var(--blue);}
+.drop svg{width:36px;height:36px;margin-bottom:10px;color:var(--blue);}
+.drop b{display:block;font-size:15px;color:var(--text);margin-bottom:4px;}
+.drop small{font-size:12.5px;}
+.thumbs{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
+.thumbs img{width:70px;height:88px;object-fit:cover;border-radius:8px;border:1px solid var(--line);}
+.submit{width:100%;background:var(--blue);color:#fff;border:none;padding:16px;border-radius:13px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:8px;transition:.15s;}
+.submit:hover{background:var(--blue-dark);}
+.note{background:var(--blue-soft);color:var(--blue-dark);font-size:13px;border-radius:12px;padding:14px 16px;margin-top:20px;line-height:1.6;}
+
+/* ===== ORG CHART ===== */
+.org-wrap{max-width:920px;margin:0 auto;}
+.org-top{display:flex;justify-content:center;margin-bottom:8px;}
+.org-node{
+  background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:16px 26px;text-align:center;
+  border:2px solid transparent;min-width:150px;
+}
+.org-node .nt{font-size:16px;font-weight:800;letter-spacing:-.3px;}
+.org-node .nd{font-size:12.5px;color:var(--text-mute);margin-top:3px;}
+.org-node.hq{background:var(--blue);color:#fff;}
+.org-node.hq .nd{color:rgba(255,255,255,.8);}
+.org-node.team{border-color:var(--blue);}
+.org-node.team .nt{color:var(--blue-dark);font-size:15px;}
+.connector{width:2px;height:26px;background:#C9D2DC;margin:0 auto;}
+.org-teams{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-top:8px;}
+.team-col{display:flex;flex-direction:column;align-items:center;}
+.parts{display:flex;flex-direction:column;gap:10px;margin-top:20px;}
+.part{background:#fff;border-radius:11px;box-shadow:var(--shadow);padding:13px 18px;font-size:14px;font-weight:600;color:var(--text-sub);text-align:center;border-left:3px solid var(--blue);}
+
+@media(max-width:980px){
+  .grid{grid-template-columns:repeat(4,1fr);}
+  .toon-grid{grid-template-columns:repeat(2,1fr);}
+  .wrap.two{grid-template-columns:1fr;}
+  .nav{display:none;}
+}
+
+</style>
+</head>
+<body>
+
+<header class="topbar" id="topbar"></header>
+
+<!-- 앱 그리드 -->
+<section class="hero">
+  <div class="hero-head">
+    <h1>사내 인사·교육 웹툰 📚</h1>
+    <p>HYPOKEIMENON 임직원을 위한 인사 안내와 교육 콘텐츠를 웹툰으로 만나보세요.</p>
+  </div>
+  <div class="grid" id="homeGrid"></div>
+</section>
+
+<!-- 본문 -->
+<div class="wrap two">
+  <main>
+    <div class="section-title">🆕 최근 올라온 웹툰 <a href="list.html" class="more">전체보기 ›</a></div>
+    <div class="toon-grid" id="recentGrid"></div>
+
+    <div class="section-title" style="margin-top:42px">🔥 많이 본 웹툰</div>
+    <div class="toon-grid" id="popularGrid"></div>
+  </main>
+
+  <aside class="side">
+    <!-- 근무 시계 -->
+    <div class="card work-card" id="workClock">
+      <div class="col-title">근무 현황</div>
+      <div class="work-time">--:--:--</div>
+      <div class="work-date">-</div>
+      <div class="work-status off"><span class="ds"></span>-</div>
+      <div class="work-hours"><span>근무시간</span><b>10:00 ~ 19:00</b></div>
+    </div>
+
+    <!-- 인기 TOP -->
+    <div class="card">
+      <div class="col-title">조회수 TOP 5</div>
+      <div id="rankList"></div>
+    </div>
+
+    <!-- 바로가기 -->
+    <div class="card">
+      <div class="col-title">바로가기</div>
+      <a class="qlink" href="upload.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 9l5-5 5 5M12 4v12"/></svg>웹툰 업로드하기</a>
+      <a class="qlink" href="list.html?cat=edu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10 12 5 2 10l10 5 10-5z"/></svg>법정의무교육 모아보기</a>
+      <a class="qlink" href="org.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="3" width="6" height="5" rx="1"/><rect x="3" y="16" width="6" height="5" rx="1"/><rect x="15" y="16" width="6" height="5" rx="1"/></svg>조직도 보기</a>
+    </div>
+  </aside>
+</div>
+
+<script>
+/* ===== HYPOKEIMENON 사내 웹툰 - 공통 데이터 & 스크립트 ===== */
+
+/* 카테고리 */
+const CATEGORIES = [
+  {id:'all',     label:'전체 웹툰'},
+  {id:'hr',      label:'인사·제도'},
+  {id:'edu',     label:'법정의무교육'},
+  {id:'sec',     label:'보안·정보보호'},
+  {id:'safe',    label:'안전·보건'},
+  {id:'culture', label:'사내 문화'},
+];
+const CAT_LABEL = Object.fromEntries(CATEGORIES.map(c=>[c.id,c.label]));
+
+/* 웹툰 데이터 (※ cover/panels에 Cloudinary URL을 넣으면 실제 이미지로 표시됩니다.
+   예) cover:'https://res.cloudinary.com/계정/image/upload/v1/cover.png',
+       panels:['https://.../1.png','https://.../2.png', ...] ) */
+const WEBTOONS = [
+  {id:'wt1', title:'이런 것도 직장 내 괴롭힘일까?', cat:'edu',     dept:'인사파트',       date:'2026-05-20', views:312, color:'#3182F6', isNew:true,  cover:null, panels:[]},
+  {id:'wt2', title:'5분 만에 끝내는 정보보안 수칙', cat:'sec',     dept:'비서·총무파트',   date:'2026-05-18', views:204, color:'#7C5CFC', isNew:true,  cover:null, panels:[]},
+  {id:'wt3', title:'연차, 이렇게 쓰면 됩니다',      cat:'hr',      dept:'인사파트',       date:'2026-05-14', views:489, color:'#15C47E', isNew:false, cover:null, panels:[]},
+  {id:'wt4', title:'성희롱 예방, 함께 만드는 일터',  cat:'edu',     dept:'인사파트',       date:'2026-05-12', views:377, color:'#FF6B6B', isNew:false, cover:null, panels:[]},
+  {id:'wt5', title:'사무실 화재, 1분 대피 가이드',   cat:'safe',    dept:'비서·총무파트',   date:'2026-05-09', views:156, color:'#FF922B', isNew:false, cover:null, panels:[]},
+  {id:'wt6', title:'개인정보보호 OX 퀴즈',          cat:'edu',     dept:'비서·총무파트',   date:'2026-05-06', views:268, color:'#22B8CF', isNew:false, cover:null, panels:[]},
+  {id:'wt7', title:'우리 회사 복지 한눈에 보기',     cat:'hr',      dept:'인사파트',       date:'2026-05-02', views:521, color:'#F783AC', isNew:false, cover:null, panels:[]},
+  {id:'wt8', title:'경비 처리, 헷갈리지 않게',       cat:'hr',      dept:'회계파트',       date:'2026-04-28', views:198, color:'#4C6EF5', isNew:false, cover:null, panels:[]},
+  {id:'wt9', title:'사내 메신저 에티켓 7가지',       cat:'culture', dept:'영상기획파트',     date:'2026-04-24', views:243, color:'#20C997', isNew:false, cover:null, panels:[]},
+  {id:'wt10',title:'장애인식개선, 우리의 시선',      cat:'edu',     dept:'인사파트',       date:'2026-04-20', views:174, color:'#9775FA', isNew:false, cover:null, panels:[]},
+  {id:'wt11',title:'근무시간 & 출퇴근 안내',         cat:'hr',      dept:'인사파트',       date:'2026-04-16', views:332, color:'#3182F6', isNew:false, cover:null, panels:[]},
+  {id:'wt12',title:'클린 데스크, 보안의 시작',       cat:'sec',     dept:'비서·총무파트',   date:'2026-04-11', views:142, color:'#5C7CFA', isNew:false, cover:null, panels:[]},
+];
+
+function getWebtoon(id){ return WEBTOONS.find(w=>w.id===id); }
+
+/* ===== 공통 헤더 ===== */
+function renderHeader(active){
+  const ic = {
+    bell:'<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/>',
+    search:'<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>',
+  };
+  const link = (href,label,key)=>`<a href="${href}" class="${active===key?'active':''}">${label}</a>`;
+  document.getElementById('topbar').innerHTML = `
+    <a href="index.html" class="logo">HYPO<span>WEBTOON</span><small>사내 인사·교육 웹툰</small></a>
+    <nav class="nav">
+      ${link('index.html','홈','home')}
+      ${link('list.html','전체 웹툰','list')}
+      ${link('upload.html','업로드','upload')}
+      ${link('org.html','조직도','org')}
+    </nav>
+    <div class="top-right">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${ic.search}</svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${ic.bell}</svg>
+      <a href="upload.html" class="btn-up">+ 웹툰 올리기</a>
+    </div>`;
+}
+
+/* ===== 홈 앱 그리드 ===== */
+function renderHomeGrid(){
+  const I = {
+    all:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
+    hr:'<circle cx="12" cy="8" r="3.2"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0"/>',
+    edu:'<path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-5"/>',
+    sec:'<path d="M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5z"/><path d="M9 12l2 2 4-4"/>',
+    safe:'<path d="M12 2a7 7 0 0 0-7 7c0 2 1 3.5 1 5h12c0-1.5 1-3 1-5a7 7 0 0 0-7-7z"/><path d="M9 18h6M10 21h4"/>',
+    culture:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+    upload:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 9l5-5 5 5M12 4v12"/>',
+    org:'<rect x="9" y="3" width="6" height="5" rx="1"/><rect x="3" y="16" width="6" height="5" rx="1"/><rect x="15" y="16" width="6" height="5" rx="1"/><path d="M12 8v4M6 16v-2h12v2"/>',
+  };
+  const items = [
+    {key:'all',     label:'전체 웹툰',    href:'list.html?cat=all'},
+    {key:'hr',      label:'인사·제도',    href:'list.html?cat=hr'},
+    {key:'edu',     label:'법정의무교육', href:'list.html?cat=edu'},
+    {key:'sec',     label:'보안·정보보호',href:'list.html?cat=sec'},
+    {key:'safe',    label:'안전·보건',    href:'list.html?cat=safe'},
+    {key:'culture', label:'사내 문화',    href:'list.html?cat=culture'},
+    {key:'upload',  label:'웹툰 업로드',  href:'upload.html'},
+    {key:'org',     label:'조직도',       href:'org.html'},
+  ];
+  const svg = p=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+  const el = document.getElementById('homeGrid');
+  if(el) el.innerHTML = items.map(it=>`
+    <a class="app" href="${it.href}">
+      <div class="bubble">${svg(I[it.key])}</div>
+      <div class="label">${it.label}</div>
+    </a>`).join('');
+}
+
+/* ===== 웹툰 카드 ===== */
+function toonCard(w){
+  const coverInner = w.cover
+    ? `<img src="${w.cover}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">`
+    : '';
+  return `
+  <a class="toon" href="viewer.html?id=${w.id}">
+    <div class="cover" style="background:${w.color}">
+      ${coverInner}
+      <span class="cat-tag">${CAT_LABEL[w.cat]}</span>
+      ${w.isNew?'<span class="new">NEW</span>':''}
+      <div class="ct">${w.title}</div>
+    </div>
+    <div class="info">
+      <div class="meta"><b>${w.dept}</b><span>조회 ${w.views}</span></div>
+    </div>
+  </a>`;
+}
+
+/* ===== 근무 시계 (10:00 ~ 19:00) ===== */
+function startWorkClock(){
+  const el = document.getElementById('workClock');
+  if(!el) return;
+  function tick(){
+    const now = new Date();
+    const days = ['일','월','화','수','목','금','토'];
+    const hh = String(now.getHours()).padStart(2,'0');
+    const mm = String(now.getMinutes()).padStart(2,'0');
+    const ss = String(now.getSeconds()).padStart(2,'0');
+    const h = now.getHours();
+    let status, cls;
+    if(h < 10){ status='출근 전'; cls='off'; }
+    else if(h < 19){ status='근무 중'; cls=''; }
+    else { status='업무 종료'; cls='off'; }
+    el.querySelector('.work-time').textContent = `${hh}:${mm}:${ss}`;
+    el.querySelector('.work-date').textContent =
+      `${now.getMonth()+1}월 ${now.getDate()}일 (${days[now.getDay()]})`;
+    const st = el.querySelector('.work-status');
+    st.className = 'work-status '+cls;
+    st.innerHTML = `<span class="ds"></span>${status}`;
+  }
+  tick(); setInterval(tick,1000);
+}
+
+</script>
+<script>
+  renderHeader('home');
+  renderHomeGrid();
+  startWorkClock();
+
+  // 최근 4개
+  document.getElementById('recentGrid').innerHTML =
+    WEBTOONS.slice(0,4).map(toonCard).join('');
+  // 인기 4개
+  const byViews = [...WEBTOONS].sort((a,b)=>b.views-a.views);
+  document.getElementById('popularGrid').innerHTML =
+    byViews.slice(0,4).map(toonCard).join('');
+  // TOP5 랭킹
+  document.getElementById('rankList').innerHTML =
+    byViews.slice(0,5).map((w,i)=>`
+      <a class="rank" href="viewer.html?id=${w.id}">
+        <span class="n">${i+1}</span>
+        <span class="rt">${w.title}</span>
+        <span class="rv">${w.views}</span>
+      </a>`).join('');
+</script>
+</body>
+</html>
